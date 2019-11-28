@@ -9,6 +9,10 @@ import emTraj from './traj-6.gif';
 import chaotic3bp from './Three-body_Problem_Animation_with_COM.gif';
 import pseudoPEGraph from './psuedo.png';
 import hohmann from './hohmann-transfer.png';
+import earthMoonXY from './EarthMoonXY.png';
+import xyMu from './xyMu.gif';
+import xzMu from './xzMu.gif';
+import lagrangeRotation from './LagrangeRotatingEM-2.gif';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -18,10 +22,10 @@ import * as serviceWorker from './serviceWorker';
 // Learn more about service workers: https://bit.ly/CRA-PWA
 
 const mu = `\\mu=\\frac{m_2}{m^*}=\\frac{m_2}{m_1+m_2}`;
-const pcr3bp_model = `\\ddot { x } - 2 \\dot { y } = \\Omega _ { x } , \\quad \\ddot { y } + 2 \\dot { x } = \\Omega _ { y }, \\\\ \\quad \\text  { where } \\quad \\Omega = \\frac { x ^ { 2 } + y ^{2}}{2} + \\frac { 1 - \\mu } { r _ { 1 } } + \\frac { \\mu } { r _ { 2 } } + \\frac { \\mu ( 1 - \\mu ) } { 2 }`;
+const pcr3bp_model = `\\ddot { x }  = 2 \\dot { y } + \\Omega _ { x },\\\\ \\ddot{ y }  = \\Omega _ { y } - 2 \\dot { x },\\\\ \\ddot {z} = \\Omega_z, \\\\ \\text  { where } \\quad \\Omega = \\frac { x ^ { 2 } + y ^{2}}{2} + \\frac { 1 - \\mu } { d } + \\frac { \\mu } { r }`;
 const rotating_frame_equation = `\\begin{array} { l } { \\ddot { x } - 2 \\dot { y } - x = - \\frac { ( 1 - \\mu ) ( x + \\mu ) } { d ^ { 3 } } - \\frac { \\mu ( x - 1 + \\mu ) } { r ^ { 3 } } } \\\\ { \\ddot { y } + 2 \\dot { x } - y = - \\frac { ( 1 - \\mu ) y } { d ^ { 3 } } - \\frac { \\mu y } { r ^ { 3 } } } \\\\ { \\ddot { z } = - \\frac { ( 1 - \\mu ) z } { d ^ { 3 } } - \\frac { \\mu z } { r ^ { 3 } } } \\end{array}`;
 const forceAsGradientOfPE = `\\vec{ F } = - \\nabla \\Omega`;
-const pseudoPE = `\\Omega * = \\frac { 1 - \\mu } { d } + \\frac { \\mu } { r } + \\frac { x ^ { 2 } + y ^ { 2 } } { 2 }`;
+const pseudoPE = `\\Omega = \\frac { 1 - \\mu } { d } + \\frac { \\mu } { r } + \\frac { x ^ { 2 } + y ^ { 2 } } { 2 }`;
 const nonDim_equation = ` \\begin{array} { l } { \\vec { \\rho } = \\frac { \\vec { r } _ { 3 } } { l * } = x \\hat { x } + y \\hat { y } + z \\hat { z } } \\\\ { \\vec { d } = \\frac { \\vec { r } _ { 13 } } { l _ { 4 } } = x + \\mu \\hat { x } + y \\hat { y } + z \\hat { z } } \\\\ { \\vec { r } = \\frac { \\vec { r } _ { 23 } } { l _ { * } } = x - 1 + \\mu \\hat { x } + y \\hat { y } + z \\hat { z } } \\end{array}`;
 const r1r2_distance = `|\\vec {r2}| = \\mu  {l ^ *}, \\ |\\vec{r1}| = (1 - \\mu) {l ^ *}`;
 const kinematicTransportTh = `\\frac{dp}{dt}^{\\omega} = ^I\\frac{dp}{dt} + \\omega \\times p`;
@@ -30,15 +34,13 @@ const tau = `\\tau = \\frac{t}{t ^ *}`;
 const F13 = `\\vec{F}_{13} =-\\frac{\\tilde{G}m_3m_1}{r_{13}^3} \\vec{r_{13}}`;
 const F23 = ` \\vec{F}_{23} =-\\frac{\\tilde{G}m_3m_2}{r_{23}^3} \\vec{r_{23}}`;
 const F3 = ` \\vec{F}_{3} =  m_3 \\vec{\\ddot{r_3}} = \\frac{-Gm_1m_3\\vec{r_{13}}}{|r_{13}|^3}-\\frac{Gm_2m_3\\vec{r_{23}}}{|r_{23} |^3}`;
-
-const NondimRhodotdot = `\\ddot{\\vec{\\rho}}=-\\frac{1-\\mu}{d^3}\\vec{d}- \\frac{\\mu}{r^3}\\vec{3}`;
-
-
-
-
-
-
-
+const NondimRhodotdot = `\\ddot{\\vec{\\rho}}=-\\frac{1-\\mu}{d^3}\\vec{d}- \\frac{\\mu}{r^3}\\vec{r}`;
+const Energy = `E = \\frac { 1 } { 2 } \\left( \\dot { x } ^ { 2 } + \\dot { y } ^ { 2 } \\right) - \\Omega ( x , y )`;
+const SumAccAndVelocity = `\\dot{x}\\ddot{x}+\\dot{y}\\ddot{y}+\\dot{z}\\ddot{z}= \\Omega*_x\\dot{x}+ \\Omega*_y\\dot{y}+ \\Omega*_z\\dot{z}`;
+const IntWithTau = `\\frac{1}{2}(\\dot{x}^2+\\dot{y}^2+\\dot{z}^2) = \\Omega*-\\frac{J}{2}`;
+const Jacobi = `J = 2\\Omega - v ^ 2`;
+const zdd = `\\ddot{z}=-\\frac{(1-\\mu)z}{d^3}-\\frac{\\mu z}{r^3}=\\Omega*_z`;
+const v2 = `\\dot{x}^2+\\dot{y}^2+\\dot{z}^2 = |\\vec{V}|^2 = v^2`;
 
 
 function Intro(props) {
@@ -46,13 +48,11 @@ return (
   <div className="white-box">
     <p>Traditional <b className="hi-text">Hohmann Method</b> for Earth Moon Transfer</p>
     <img src={hohmann} height="300px" width="300px" alt="./hohmann-transfer.png"/>
-
     <iframe title="Hohmann" width="560" height="315"
             src="https://www.youtube.com/embed/pFq3_ZCHA4E"
             frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" >
     </iframe>
-
   </div>
 );
 }
@@ -94,14 +94,12 @@ function PCThreeBody(props) {
        <br/>
        - Known masses
        <br/>
-       - Only interact gravitatinally
+       - Only interact gravitationally
        <br/>
       <span className="hi-text">- m1, m2 >> m3</span>
        <br/>
       <span className="hi-text">- circular, or small eccentricity</span>
-
     </p>
-
    </div>
  );
 
@@ -355,9 +353,9 @@ function RotatinFrameEq(props) {
    <div className="dark-box">
 
      <h4>Define the equation of motion in <b className="hi-text">rotating frame</b></h4>
-     <p>Note z is uncoupled from x and y,
-        <br/>
-      we can ignore it if we only simulate planar motion</p>
+     <p>z is uncoupled from x and y, if we only <br/>
+        simulate planar motion it will always be in xy axis.</p>
+      <p>We have a system of 2nd order differential equation.</p>
      <MathJax.Provider>
        <MathJax.Node formula={rotating_frame_equation}  / >
      </MathJax.Provider>
@@ -390,7 +388,7 @@ function PseudoPotentialEnergy(props) {
 function PseudoPEGraph(props) {
   return (
    <div className="white-box">
-    <h4>Shape of Ω</h4>
+    <h4>Sketch</h4>
     <img src={pseudoPEGraph} height="500px" width="700px" alt="./traj-6.gif"/>
    </div>
 
@@ -405,11 +403,112 @@ function PCR3BP(props) {
       <MathJax.Provider>
         <MathJax.Node formula={pcr3bp_model}  / >
       </MathJax.Provider>
+      <p> Think Ω as z'' so that it become a system with 3 variables</p>
+    </div>
+  );
+}
+
+function EnergyAndLyapunov(props) {
+  return (
+    <div className="white-box">
+
+      <MathJax.Provider>
+        <h4>Because it's a <b className="hi-text">Hamiltonian System with two-degree of freedom</b>,
+            we have energy as a <b className="hi-text">Lyapunov function</b></h4>
+        <p>note: has x' y' is because the system is 2nd order.</p>
+        <MathJax.Node formula={Energy}  / >
+      </MathJax.Provider>
+    </div>
+  );
+}
+
+
+function LagrangePoints(props) {
+  return (
+    <div className="dark-box">
+      <h4><b className="hi-text">LagrangePoints</b> are fixed points in PCR3BP</h4>
+      <img src={lagrangeRotation} height="500px" width="700px" alt="./LagrangeRotatingEM-2.gif"/>
+    </div>
+  );
+}
+
+function FindingLagrangePoints(props) {
+  return (
+    <div className="white-box">
+      <h4> Using nullcline to fine lagrange points</h4>
 
     </div>
   );
 }
 
+function JacobiConstant(props) {
+  return (
+    <div className = "dark-box">
+      <MathJax.Provider>
+        <h4 className="hi-text">Jacobi Constant</h4>
+        <p>Jacobi Constant is the only known conserved quantity for the circular restricted three-body problem.</p>
+        <p>It is a constant generated by integration, so also called Jacobi Integral</p>
+
+
+        <MathJax.Node formula={SumAccAndVelocity}  / >
+
+        <p>Integrate both sides with τ get</p>
+        <MathJax.Node formula={IntWithTau}  / >
+
+        <p>Rearrange:</p>
+        <MathJax.Node formula={Jacobi}  / >
+
+        <p>Ω is a function of position, J is a constant
+          <MathJax.Node formula={v2}  / > is the square of velocity.
+        </p>
+
+      </MathJax.Provider>
+      <p></p>
+
+    </div>
+  );
+}
+
+function JacobiContour1(props) {
+  return (
+    <div className="white-box">
+      <h4>Contour for different Jacobi</h4>
+      <img src={earthMoonXY} width="650px" height="550px" alt="./EarthMoonXY.png"/>
+    </div>
+  );
+}
+
+
+function JacobiContour2(props) {
+  return (
+    <div className="white-box">
+      <h4>Jacobi Contour with change of μ</h4>
+      <img src={xyMu} width="650px" height="550px" alt="./xyMu.gif"/>
+    </div>
+  );
+}
+
+function JacobiContour3(props) {
+  return (
+    <div className="white-box">
+      <h4>Jacobi Contour with change of μ</h4>
+      <img src={xzMu} width="650px" height="550px" alt="./xzMu.gif"/>
+    </div>
+  );
+}
+
+function References(props) {
+  return (
+    <div className="white-box">
+      <h1>Thank you!</h1>
+      <h4>References</h4>
+      <a href="http://www.gg.caltech.edu/~mwl/publications/papers/lowEnergy.pdf">
+        Low Energy Transfer to the Moon</a>
+
+      <a href="https://gereshes.com/category/math/astrodynamics/cr3bp/">CR3BP</a>
+    </div>
+  );
+}
 
 class Board extends React.Component {
   render() {
@@ -431,6 +530,7 @@ class Board extends React.Component {
         <EarthMoonTrajectory/>
         <BaryCenter/>
         <RotatingFrameDigram/>
+
         <SomeVarDefines/>
         <NonDimVectorsDefine/>
         <FictitiousForceAndKinematic/>
@@ -439,6 +539,18 @@ class Board extends React.Component {
         <PseudoPotentialEnergy/>
         <PseudoPEGraph/>
         <PCR3BP/>
+
+        <EnergyAndLyapunov/>
+
+        <LagrangePoints/>
+        <FindingLagrangePoints/>
+
+        <JacobiConstant/>
+        <JacobiContour1/>
+        <JacobiContour2/>
+        <JacobiContour3/>
+
+        <References/>
       </div>
     );
   }
