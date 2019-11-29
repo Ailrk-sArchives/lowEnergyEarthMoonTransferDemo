@@ -13,6 +13,13 @@ import earthMoonXY from './EarthMoonXY.png';
 import xyMu from './xyMu.gif';
 import xzMu from './xzMu.gif';
 import lagrangeRotation from './LagrangeRotatingEM-2.gif';
+import lagrangeP from './lagrange.gif';
+import lowETrajectory from './loweneryTrajectory.png';
+import tracedet from './tracedet.png';
+import forbbiden1 from './icZVC.png';
+import forbbiden2 from './ZCVL0L11.gif';
+import forbbiden3 from './trajSwingW1.gif';
+import hiten from './hiten.jpeg';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -22,7 +29,7 @@ import * as serviceWorker from './serviceWorker';
 // Learn more about service workers: https://bit.ly/CRA-PWA
 
 const mu = `\\mu=\\frac{m_2}{m^*}=\\frac{m_2}{m_1+m_2}`;
-const pcr3bp_model = `\\ddot { x }  = 2 \\dot { y } + \\Omega _ { x },\\\\ \\ddot{ y }  = \\Omega _ { y } - 2 \\dot { x },\\\\ \\ddot {z} = \\Omega_z, \\\\ \\text  { where } \\quad \\Omega = \\frac { x ^ { 2 } + y ^{2}}{2} + \\frac { 1 - \\mu } { d } + \\frac { \\mu } { r }`;
+const pcr3bp_model = `\\ddot { x }  = 2 \\dot { y } + \\Omega _ { x },\\\\ \\ddot{ y }  = - 2 \\dot { x } + \\Omega _ { y } ,\\\\ \\ddot {z} = \\Omega_z, \\\\ \\text  { where } \\quad \\Omega = \\frac { x ^ { 2 } + y ^{2}}{2} + \\frac { 1 - \\mu } { d } + \\frac { \\mu } { r }`;
 const rotating_frame_equation = `\\begin{array} { l } { \\ddot { x } - 2 \\dot { y } - x = - \\frac { ( 1 - \\mu ) ( x + \\mu ) } { d ^ { 3 } } - \\frac { \\mu ( x - 1 + \\mu ) } { r ^ { 3 } } } \\\\ { \\ddot { y } + 2 \\dot { x } - y = - \\frac { ( 1 - \\mu ) y } { d ^ { 3 } } - \\frac { \\mu y } { r ^ { 3 } } } \\\\ { \\ddot { z } = - \\frac { ( 1 - \\mu ) z } { d ^ { 3 } } - \\frac { \\mu z } { r ^ { 3 } } } \\end{array}`;
 const forceAsGradientOfPE = `\\vec{ F } = - \\nabla \\Omega`;
 const pseudoPE = `\\Omega = \\frac { 1 - \\mu } { d } + \\frac { \\mu } { r } + \\frac { x ^ { 2 } + y ^ { 2 } } { 2 }`;
@@ -36,12 +43,30 @@ const F23 = ` \\vec{F}_{23} =-\\frac{\\tilde{G}m_3m_2}{r_{23}^3} \\vec{r_{23}}`;
 const F3 = ` \\vec{F}_{3} =  m_3 \\vec{\\ddot{r_3}} = \\frac{-Gm_1m_3\\vec{r_{13}}}{|r_{13}|^3}-\\frac{Gm_2m_3\\vec{r_{23}}}{|r_{23} |^3}`;
 const NondimRhodotdot = `\\ddot{\\vec{\\rho}}=-\\frac{1-\\mu}{d^3}\\vec{d}- \\frac{\\mu}{r^3}\\vec{r}`;
 const Energy = `E = \\frac { 1 } { 2 } \\left( \\dot { x } ^ { 2 } + \\dot { y } ^ { 2 } \\right) - \\Omega ( x , y )`;
-const SumAccAndVelocity = `\\dot{x}\\ddot{x}+\\dot{y}\\ddot{y}+\\dot{z}\\ddot{z}= \\Omega*_x\\dot{x}+ \\Omega*_y\\dot{y}+ \\Omega*_z\\dot{z}`;
-const IntWithTau = `\\frac{1}{2}(\\dot{x}^2+\\dot{y}^2+\\dot{z}^2) = \\Omega*-\\frac{J}{2}`;
+const SumAccAndVelocity = `\\dot{x}\\ddot{x}+\\dot{y}\\ddot{y}+\\dot{z}\\ddot{z}= \\Omega_x\\dot{x}+ \\Omega_y\\dot{y}+ \\Omega_z\\dot{z}`;
+const IntWithTau = `\\frac{1}{2}(\\dot{x}^2+\\dot{y}^2+\\dot{z}^2) = \\Omega-\\frac{J}{2}`;
 const Jacobi = `J = 2\\Omega - v ^ 2`;
-const zdd = `\\ddot{z}=-\\frac{(1-\\mu)z}{d^3}-\\frac{\\mu z}{r^3}=\\Omega*_z`;
+const zdd = `\\ddot{z}=-\\frac{(1-\\mu)z}{d^3}-\\frac{\\mu z}{r^3}=\\Omega_z`;
 const v2 = `\\dot{x}^2+\\dot{y}^2+\\dot{z}^2 = |\\vec{V}|^2 = v^2`;
+const xddeq0 = `0 = \\frac{(1-\\mu)(x+\\mu)}{d^3}- \\frac{\\mu(x-1+\\mu)}{r^3} = \\Omega_x`;
+const yddeq0 = `0 = \\frac{(1-\\mu)y}{d^3}- \\frac{\\mu y}{r^3}= \\Omega_y`;
+const zddeq0 = `0 = \\frac{(1-\\mu)z}{d^3}- \\frac{\\mu z}{r^3}= \\Omega_z`;
+const vectuple6 = `[x,y,z,\\dot{x},\\dot{y},\\dot{z}]`;
+const vectuple4 = `[x,y,\\dot{x},\\dot{y}]`;
 
+const pertx = `x = x_{L_i} + \\xi`;
+const perty = `y = y_{L_i} + \\eta`;
+const ddxi = `\\ddot{\\xi}-2\\dot{\\eta}= \\Omega_{xx}\\xi+\\Omega_{xy}\\eta`;
+const ddeta = `\\ddot{\\eta}+2\\dot{\\xi} = \\Omega_{xy}\\xi+\\Omega_{yy}\\eta`;
+
+const omegaxx = `\\Omega_{xx}= 1-\\frac{1-\\mu}{d^3}-\\frac{\\mu}{r^3}+\\frac{3(1-\\mu)(x+\\mu)^2}{d^5}+\\frac{3\\mu(x-1+\\mu)^2}{r^5}`;
+const omegayy = `\\Omega_{yy}= 1-\\frac{1-\\mu}{d^3}-\\frac{\\mu}{r^3}+\\frac{3(1-\\mu)y^2}{d^5}+\\frac{3\\mu y^2}{r^5}`;
+const omegaxy = `\\Omega_{xy}= \\Omega_{yx}= \\frac{3(1-\\mu)(x+\\mu)y}{d^5}+\\frac{3\\mu(x-1+\\mu)y}{r^5}`;
+const jacobian = `A = \\begin{bmatrix} 0&0&1&0\\\\ 0&0&0&1\\\\ \\Omega_{xx} & \\Omega_{xy} &0&2\\\\\\Omega_{xy} & \\Omega_{yy} &-2&0\\end{bmatrix}`;
+const chareq = `\\lambda^4 + (4-\\Omega_{xx}-\\Omega_{yy}) \\lambda^2+ (\\Omega_{xx}\\Omega_{yy}-\\Omega_{xy}\\Omega_{yx})=0`;
+const simplifiedchareq = `\\lambda ^2 + 2\\beta_1 \\Lambda - \\beta _2^2=0`;
+const simcheqvars = `\\begin{array} { l } { \\beta _ { 1 } = 2 - \\frac { \\Omega _ { x x } + \\Omega _ { y y } } { 2 } } \\\\ { \\beta _ { 2 } ^ { 2 } = - \\Omega _ { x x } \\Omega _ { y y } + \\Omega _ { x y } \\Omega _ { y x } } \\\\ { \\lambda _ { 1,2 } = \\pm \\sqrt { \\Lambda _ { 1 } } } \\\\ { \\lambda _ { 3,4 } = \\pm \\sqrt { \\Lambda _ { 2 } } } \\end{array}`;
+const colinearLambda = `\\Lambda_1 > 0, \\Lambda_2 < 0`;
 
 function Intro(props) {
 return (
@@ -198,7 +223,6 @@ function RotatingFrameDigram(props) {
       p5.text('R1', 170, 320);
       p5.text('R2', 300, 220);
       p5.text('X\'', 435, 60);
-      p5.text('Y\'', 25, 120);
       p5.pop();
 
     }
@@ -228,7 +252,11 @@ function RotatingFrameDigram(props) {
     if (Math.abs(p5.mouseX - showArc[0]) < 3 &&
         Math.abs(p5.mouseY - showArc[1]) < 3) {
       p5.push();
+      p5.fill("#09d3ac");
       p5.stroke("#09d3ac");
+      p5.line(200, 300, 70, 150);
+      p5.textSize(25);
+      p5.text('Y\'', 25, 120);
       p5.noFill();
       p5.strokeWeight(5);
       p5.arc(200, 300, 150, 150, -0.75, 0);
@@ -275,6 +303,27 @@ function RotatingFrameDigram(props) {
    </div>
  );
 
+}
+
+function TrajectoryOnDifferentPlanes(props) {
+
+return (
+	<div className="white-box">
+    <h4>
+      Trajectory looks different under different reference frames
+    </h4>
+    <p>rotating frame of reference show some hidden structure of the system</p>
+		<iframe title="Trajs"
+						width="560"
+					  height="315"
+					  src="https://www.youtube.com/embed/wusat71RXF4"
+					 frameborder="0"
+					 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+					 allowfullscreen>
+		</iframe>
+
+	</div>
+);
 }
 
 function SomeVarDefines(props) {
@@ -435,11 +484,221 @@ function LagrangePoints(props) {
 function FindingLagrangePoints(props) {
   return (
     <div className="white-box">
-      <h4> Using nullcline to fine lagrange points</h4>
+      <h4> Finding lagrange points</h4>
+      <MathJax.Provider>
+        <MathJax.Node formula={xddeq0}  / >
+        <MathJax.Node formula={yddeq0}  / >
+        <MathJax.Node formula={zddeq0}  / >
+        <p>z should be 0 for third equation to be zero, so we can ignore z</p>
+      </MathJax.Provider>
+
 
     </div>
   );
 }
+
+function FindingLagrangePointsColinear(props) {
+  return (
+    <div className="dark-box">
+      <h4> Finding lagrange points</h4>
+      <p><b className="hi-text">Colinear</b> Lagrange point L1, L2, L3</p>
+
+      <MathJax.Provider>
+        <p>When y=0, left one equation</p>
+        <MathJax.Node formula={xddeq0}  / >
+        <p>It gives us three Equilibrium points along x axis, called L1, L2, L3 respectively</p>
+      </MathJax.Provider>
+
+    </div>
+  );
+}
+
+
+function FindingLagrangePointsEquilateral(props) {
+  return (
+    <div className="white-box">
+      <h4> Finding lagrange points</h4>
+      <p><b className="hi-text">Equilateral</b> Lagrange point L4, L5</p>
+
+      <MathJax.Provider>
+        <p>When y is not 0, solve get L4, L5</p>
+        <p>Both L4, L5 are </p>
+        <p>It turns out L4, P1, P2 or L5, P1, P2 form equilateral triangle</p>
+      </MathJax.Provider>
+
+    </div>
+  );
+
+}
+
+function FindingLagrangePointsGraph(props) {
+  return (
+    <div className="white-box">
+      <h4>All five lagrange points</h4>
+      <img src={lagrangeP} alt="./lagrange.gif"/>
+    </div>
+  );
+}
+
+function StabilityOfLagrangePoints(props) {
+  return (
+    <div className="dark-box">
+      <h4>Stability of Lagrange Points </h4>
+      <MathJax.Provider>
+        <p>We can linearize the system about lagrange points </p>
+        <p>First rewrite into a system of 1st order<br/> differential equation</p>
+
+        <MathJax.Node formula={vectuple6}  / >
+
+        <p>Because the motion is constrained in a plane, <br/>
+           also z is decoupled from x and y, <br/>
+           we can simply it by removing z component
+          </p>
+        <MathJax.Node formula={vectuple4}  / >
+      </MathJax.Provider>
+
+
+    </div>
+  );
+}
+
+function StabilityOfLagrangePointsLinearize1(props) {
+  return (
+    <div className="white-box">
+      <h4>Stability of Lagrange Points</h4>
+
+      <MathJax.Provider>
+        <p>Now we define perturbation as </p>
+
+        <MathJax.Node formula={pertx}  / >
+
+        <MathJax.Node formula={perty}  / >
+      </MathJax.Provider>
+
+
+    </div>
+  );
+}
+
+function StabilityOfLagrangePointsLinearize2(props) {
+  return (
+    <div className="white-box">
+      <h4>Stability of Lagrange Points</h4>
+
+      <MathJax.Provider>
+        <p>Use taylor expansion get first order terms</p>
+
+        <MathJax.Node formula={ddxi}  / >
+
+        <MathJax.Node formula={ddeta}  / >
+      </MathJax.Provider>
+
+
+    </div>
+  );
+}
+
+
+function StabilityOfLagrangePointsLinearize3(props) {
+  return (
+    <div className="white-box">
+      <h4>Stability of Lagrange Points</h4>
+
+      <MathJax.Provider>
+        <p>Double derivatives terms looks like</p>
+
+        <MathJax.Node className="dark-text" formula={omegaxx}  / >
+        <MathJax.Node className="dark-text" formula={omegayy}  / >
+        <MathJax.Node className="dark-text" formula={omegaxy}  / >
+      </MathJax.Provider>
+
+
+    </div>
+  );
+}
+
+function StabilityOfLagrangePointsLinearize4(props) {
+  return (
+    <div className="white-box">
+      <h4>Stability of Lagrange Points</h4>
+
+      <MathJax.Provider>
+        <p>Calculate Jacobian A</p>
+
+        <MathJax.Node className="dark-text" formula={jacobian}  / >
+
+
+      </MathJax.Provider>
+
+
+    </div>
+  );
+}
+
+
+function StabilityOfLagrangePointsCharEq(props) {
+  return (
+    <div className="white-box">
+
+      <h4>Stability of Lagrange Points</h4>
+      <MathJax.Provider>
+        <p>Characteristic equation is</p>
+        <MathJax.Node className="dark-text" formula={chareq}  / >
+        <p>Simplify it </p>
+        <MathJax.Node className="dark-text" formula={simplifiedchareq}  / >
+        <p>where</p>
+        <MathJax.Node className="dark-text" formula={simcheqvars}  / >
+      </MathJax.Provider>
+
+    </div>
+  );
+}
+
+function StabilityOfLagrangePointsColinear1(props) {
+  return (
+    <div className="dark-box">
+
+      <h4>Stability of Lagrange Points</h4>
+      <MathJax.Provider>
+        <p>For <b className="hi-text">colinear lagrange points </b>, y = 0</p>
+        <p>Solve the equation we get</p>
+        <MathJax.Node formula={colinearLambda}  / >
+      </MathJax.Provider>
+
+    </div>
+  );
+}
+
+
+function StabilityOfLagrangePointsColinear2(props) {
+  return (
+    <div className="dark-box">
+
+      <h4>Stability of Lagrange Points of <b className="hi-text">colinear lagrange points </b></h4>
+      <MathJax.Provider>
+        <p>Because we have</p>
+        <MathJax.Node formula={simcheqvars}  / >
+        <p>We get four λs, one is <b className="hi-text">positive real</b>,
+            one is <b className="hi-text">negative real</b></p>
+        <p>Other two are <b className="hi-text">pure imaginary</b></p>
+        <p>So Colinear Lagrange points are <b className="hi-text">Unstable Saddle Node</b></p>
+      </MathJax.Provider>
+
+    </div>
+  );
+}
+
+
+function StabilityOfLagrangePointsEq(props) {
+  return (
+    <div className="white-box">
+      <h4>Lagrange Points L4, L5 are stable when μ is less then 0.3852</h4>
+      <p>if μ ≤ 03852 we get two different imaginary roots.<br/>
+        Each one of these roots correspond to a different period of oscillation.</p>
+    </div>
+  );
+}
+
 
 function JacobiConstant(props) {
   return (
@@ -448,6 +707,7 @@ function JacobiConstant(props) {
         <h4 className="hi-text">Jacobi Constant</h4>
         <p>Jacobi Constant is the only known conserved quantity for the circular restricted three-body problem.</p>
         <p>It is a constant generated by integration, so also called Jacobi Integral</p>
+
 
 
         <MathJax.Node formula={SumAccAndVelocity}  / >
@@ -497,6 +757,81 @@ function JacobiContour3(props) {
   );
 }
 
+function ForbiddenArea1(props) {
+  return (
+    <div className="dark-box">
+      <h4>Forbidden Area</h4>
+      <p>Jacobi Integral decrase as velocity increase</p>
+      <p>It's like trading position with velocity</p>
+      <p>When satellite is far from the Earth enough, it will lose velocity</p>
+      <img src={forbbiden1} height="400px" width="800px" alt="./icZVC.png"/>
+    </div>
+  );
+}
+
+function ForbiddenArea2(props) {
+  return (
+    <div className="dark-box">
+      <h4>Forbidden Area</h4>
+      <p>Jacobi Integral decrase as velocity increase</p>
+      <p>It's like trade position with velocity</p>
+      <p>When satellite is far from the Earth enough, it will lose velocity</p>
+      <img src={forbbiden2} height="400px" width="800px" alt="./ZCVL0L11.gif"/>
+    </div>
+  );
+}
+function ForbiddenArea3(props) {
+  return (
+    <div className="dark-box">
+      <h4>Forbidden Area</h4>
+      <p>Jacobi Integral decrase as velocity increase</p>
+      <p>It's like trade position with velocity</p>
+      <p>When satellite is far from the Earth enough, it will lose velocity</p>
+      <img src={forbbiden3} height="400px" width="800px" alt="./trajSwingW1.gif"/>
+    </div>
+  );
+}
+
+function StableManifoldTube(props) {
+  return (
+    <div className="dark-box">
+      <h4></h4>
+    </div>
+  );
+}
+
+// Combined Trajectory
+function Trajectory(props) {
+  return (
+    <div className="white-box">
+      <h4>Low energy trajectory</h4>
+      <p>
+      The spacecraft leaves the Earth parking orbit through a stable/unstable
+        <br/>manifolds in the Sun-Earth system, makes a swing aroundL1(orL2),</p>
+      <p>
+      then it is connected to stable manifold of the Earth-Moon system.
+      </p>
+      <img src={lowETrajectory} alt="./loweneryTrajectory.png"/>
+    </div>
+  );
+}
+
+function Efficient(props) {
+  return (
+    <div className="dark-box">
+      <p>Japanese spacecraft <b className="hi-text">Hiten </b>used<br/>
+        low energy transfers in 1991 <br/>
+        due to a limited propellant budget<br/>
+        The saving approach 25% after leaving <br/>
+        the Earth orbit, and it allows for a <br/>
+        doubling of payload
+      </p>
+
+      <img src={hiten} height="400px" width="400px" alt="./hiten.jpeg"/>
+    </div>
+  );
+}
+
 function References(props) {
   return (
     <div className="white-box">
@@ -530,6 +865,7 @@ class Board extends React.Component {
         <EarthMoonTrajectory/>
         <BaryCenter/>
         <RotatingFrameDigram/>
+			  <TrajectoryOnDifferentPlanes/>
 
         <SomeVarDefines/>
         <NonDimVectorsDefine/>
@@ -544,19 +880,50 @@ class Board extends React.Component {
 
         <LagrangePoints/>
         <FindingLagrangePoints/>
+        <FindingLagrangePointsColinear/>
+        <FindingLagrangePointsEquilateral/>
+        <FindingLagrangePointsGraph/>
+
+        <StabilityOfLagrangePoints/>
+        <StabilityOfLagrangePointsLinearize1/>
+        <StabilityOfLagrangePointsLinearize2/>
+        <StabilityOfLagrangePointsLinearize3/>
+        <StabilityOfLagrangePointsLinearize4/>
+        <StabilityOfLagrangePointsCharEq/>
+        <StabilityOfLagrangePointsColinear1/>
+        <StabilityOfLagrangePointsColinear2/>
+        <StabilityOfLagrangePointsEq/>
 
         <JacobiConstant/>
         <JacobiContour1/>
         <JacobiContour2/>
         <JacobiContour3/>
 
+        <ForbiddenArea1/>
+        <ForbiddenArea2/>
+        <ForbiddenArea3/>
+        <Trajectory/>
+        <Efficient/>
         <References/>
+
       </div>
     );
   }
 }
 
-
 ReactDOM.render(<Board />, document.getElementById('root'));
 serviceWorker.unregister();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
